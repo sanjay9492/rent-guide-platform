@@ -1,11 +1,19 @@
+import sys
+import os
+from pathlib import Path
+
+# Add the project root to sys.path to resolve 'backend' module in production
+root_dir = Path(__file__).parent.parent
+if str(root_dir) not in sys.path:
+    sys.path.insert(0, str(root_dir))
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import List, Optional
-from pathlib import Path
-from backend.services import CityService  # Absolute import for root-level execution
+from backend.services import CityService  # Now this will be found
 
 app = FastAPI()
 
