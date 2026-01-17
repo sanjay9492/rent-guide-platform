@@ -2,10 +2,26 @@ import sys
 import os
 from pathlib import Path
 
-# Add the project root to sys.path to resolve 'backend' module in production
-root_dir = Path(__file__).parent.parent
-if str(root_dir) not in sys.path:
-    sys.path.insert(0, str(root_dir))
+# Force absolute path resolution
+current_dir = Path(__file__).parent.absolute()
+parent_dir = current_dir.parent.absolute()
+
+# Add both current and parent to sys.path for maximum compatibility
+if str(current_dir) not in sys.path:
+    sys.path.insert(0, str(current_dir))
+if str(parent_dir) not in sys.path:
+    sys.path.insert(0, str(parent_dir))
+
+print(f"DEBUG: sys.path is {sys.path}")
+print(f"DEBUG: Current dir is {current_dir}")
+print(f"DEBUG: Parent dir is {parent_dir}")
+
+try:
+    import services
+    from services import CityService
+except ImportError:
+    from backend import services
+    from backend.services import CityService
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,7 +29,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import List, Optional
-from backend.services import CityService  # Now this will be found
 
 app = FastAPI()
 
@@ -94,8 +109,13 @@ def estimate_rent(data: EstimateRequest):
     }
 
 # --- Community/Review Endpoints ---
-from backend.database import get_session, create_db_and_tables
-from backend.models import RentReview, Question, Answer, PropertyListing
+try:
+    from database import get_session, create_db_and_tables
+    from models import RentReview, Question, Answer, PropertyListing
+except ImportError:
+    from backend.database import get_session, create_db_and_tables
+    from backend.models import RentReview, Question, Answer, PropertyListing
+
 from sqlmodel import Session, select
 from fastapi import Depends, HTTPException
 
