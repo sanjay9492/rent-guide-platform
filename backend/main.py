@@ -86,8 +86,8 @@ def estimate_rent(data: EstimateRequest):
     }
 
 # --- Community/Review Endpoints ---
-from backend.database import get_session, create_db_and_tables
-from backend.models import RentReview, Question, Answer, PropertyListing
+from database import get_session, create_db_and_tables
+from models import RentReview, Question, Answer, PropertyListing
 from sqlmodel import Session, select
 from fastapi import Depends, HTTPException
 
