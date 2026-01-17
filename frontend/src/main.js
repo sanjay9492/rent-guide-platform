@@ -1,9 +1,11 @@
 import './style.css'
 
-// Use relative path for API - works for both local and production
-const apiBase = window.location.hostname === 'localhost'
-  ? 'http://localhost:8000'
-  : '';  // Empty string = same origin
+// API Base URL Configuration
+// 1. Check if VITE_API_URL is provided (Standard production method)
+// 2. Check if on localhost (Local development)
+// 3. Default to relative path (Unified deployment)
+const apiBase = import.meta.env.VITE_API_URL ||
+  (window.location.hostname === 'localhost' ? 'http://localhost:8000' : '');
 
 
 
