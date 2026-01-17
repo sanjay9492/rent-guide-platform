@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import List, Optional
+from pathlib import Path
 from backend.services import CityService
 
 app = FastAPI()
@@ -13,6 +16,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve frontend static files
+frontend_dist = Path(__file__).parent.parent / "frontend" / "dist"
+if frontend_dist.exists():
+    app.mount("/assets", StaticFiles(directory=frontend_dist / "assets"), name="assets")
 
 class CityInfoRequest(BaseModel):
     city_name: str
@@ -154,3 +162,15 @@ def create_listing(listing: PropertyListing, session: Session = Depends(get_sess
     session.refresh(listing)
     return {"status": "success", "message": "Listing submitted for approval", "id": listing.id}
 
+
+# Catch-all route: Serve index.html for all non-API routes (SPA routing)
+@app.get("/{full_path:path}")
+async def serve_frontend(full_path: str):
+    """Serve the frontend for all routes that aren't API endpoints"""
+    frontend_dist = Path(__file__).parent.parent / "frontend" / "dist"
+    index_file = frontend_dist / "index.html"
+    
+    if index_file.exists():
+        return FileResponse(index_file)
+    else:
+        return {"error": "Frontend not built. Run 'npm run build' in frontend directory."}
