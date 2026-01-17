@@ -199,7 +199,10 @@ async def serve_frontend(full_path: str):
     frontend_dist = Path(__file__).parent.parent / "frontend" / "dist"
     index_file = frontend_dist / "index.html"
     
+    print(f"DEBUG: Looking for index.html at: {index_file.absolute()}")
+    print(f"DEBUG: Frontend dist exists: {frontend_dist.exists()}")
+    
     if index_file.exists():
         return FileResponse(index_file)
     else:
-        return {"error": "Frontend not built. Run 'npm run build' in frontend directory."}
+        return {"error": f"Frontend not built. Looking at {index_file.absolute()}"}
