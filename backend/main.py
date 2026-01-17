@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import List, Optional
 from pathlib import Path
-from services import CityService  # Relative import since we run from backend/
+from backend.services import CityService  # Absolute import for root-level execution
 
 app = FastAPI()
 
@@ -86,8 +86,8 @@ def estimate_rent(data: EstimateRequest):
     }
 
 # --- Community/Review Endpoints ---
-from database import get_session, create_db_and_tables
-from models import RentReview, Question, Answer, PropertyListing
+from backend.database import get_session, create_db_and_tables
+from backend.models import RentReview, Question, Answer, PropertyListing
 from sqlmodel import Session, select
 from fastapi import Depends, HTTPException
 
