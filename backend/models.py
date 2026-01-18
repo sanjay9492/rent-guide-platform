@@ -39,3 +39,14 @@ class PropertyListing(SQLModel, table=True):
     description: Optional[str] = None
     status: str = "Pending"  # Pending, Approved
     timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+class SavedListing(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    listing_id: str = Field(index=True)
+    name: str = Field(default="Unknown Property") # Default to handle legacy data if any
+    price: int = Field(default=0)
+    area: str = Field(default="Unknown Area")
+    city: str = Field(default="Unknown City")
+    image: str = Field(default="")
+    type: str = Field(default="Flat")
+    timestamp: datetime = Field(default_factory=datetime.utcnow)

@@ -120,42 +120,59 @@ window.addEventListener('hashchange', handleRoute);
 window.addEventListener('load', handleRoute);
 
 // Q&A Interaction
-window.postQuestion = function () {
+window.postQuestion = async function () {
   const input = document.getElementById('new-question-input');
   const text = input.value.trim();
   if (!text) return;
 
-  const feed = document.getElementById('qa-feed');
-  const questionId = `q-${Date.now()}`; // Unique ID
-
-  const newCard = document.createElement('div');
-  newCard.className = "bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 animate-fade-in";
-  newCard.innerHTML = `
-        <div class="flex items-center gap-3 mb-2">
-            <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs">ME</div>
-            <span class="text-sm font-bold text-gray-900 dark:text-white">You</span>
-            <span class="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">Just now</span>
-        </div>
-        <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">${text}</h4>
-        
-        <div id="replies-${questionId}"></div>
-        
-        <div class="flex flex-col gap-2">
-            <div class="flex gap-4 text-sm text-gray-500">
-                <button onclick="toggleReply('${questionId}')" class="hover:text-indigo-600 font-bold">💬 Reply</button>
-                <button class="hover:text-indigo-600">⬆️ 0 Upvotes</button>
-            </div>
-            <div id="reply-box-${questionId}" class="hidden mt-2 flex gap-2">
-                <input type="text" placeholder="Type your reply..." 
-                    class="flex-grow px-3 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
-                <button onclick="submitReply('${questionId}')" 
-                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Send</button>
-            </div>
-        </div>
-    `;
-  feed.prepend(newCard);
-  input.value = '';
+  try {
+    const res = await fetch(`${apiBase}/questions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: text, user_name: "You" })
+    });
+    if (res.ok) {
+      input.value = '';
+      loadQuestions(); // Refresh feed
+    }
+  } catch (e) {
+    console.error("Failed to post question:", e);
+    alert("Failed to post. Check connection.");
+  }
 };
+
+window.loadQuestions = async function () {
+  const feed = document.getElementById('qa-feed');
+  if (!feed) return;
+
+  try {
+    const res = await fetch(`${apiBase}/questions`);
+    if (!res.ok) return;
+
+    const questions = await res.json();
+    feed.innerHTML = questions.map(q => `
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 animate-fade-in">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs">
+                        ${q.user_name.substring(0, 2).toUpperCase()}
+                    </div>
+                    <span class="text-sm font-bold text-gray-900 dark:text-white">${q.user_name}</span>
+                    <span class="text-xs text-gray-400">${new Date(q.timestamp).toLocaleDateString()}</span>
+                </div>
+                <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">${q.text}</h4>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex gap-4 text-sm text-gray-500">
+                        <button class="hover:text-indigo-600 font-bold">💬 Reply</button>
+                        <button class="hover:text-indigo-600">⬆️ ${q.upvotes} Upvotes</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+  } catch (e) {
+    console.error("Failed to load questions:", e);
+  }
+}
 
 window.toggleReply = function (id) {
   const box = document.getElementById(`reply-box-${id}`);

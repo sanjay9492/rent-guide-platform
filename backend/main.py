@@ -111,10 +111,12 @@ def estimate_rent(data: EstimateRequest):
 # --- Community/Review Endpoints ---
 try:
     from database import get_session, create_db_and_tables
-    from models import RentReview, Question, Answer, PropertyListing
+    from models import RentReview, Question, Answer, PropertyListing, SavedListing
+
 except ImportError:
     from backend.database import get_session, create_db_and_tables
-    from backend.models import RentReview, Question, Answer, PropertyListing
+    from backend.models import RentReview, Question, Answer, PropertyListing, SavedListing
+
 
 from sqlmodel import Session, select
 from fastapi import Depends, HTTPException
@@ -190,6 +192,36 @@ def create_listing(listing: PropertyListing, session: Session = Depends(get_sess
     session.commit()
     session.refresh(listing)
     return {"status": "success", "message": "Listing submitted for approval", "id": listing.id}
+
+# --- Saved Properties ---
+@app.get("/saved-properties")
+def get_saved_properties(session: Session = Depends(get_session)):
+    statement = select(SavedListing).order_by(SavedListing.timestamp.desc())
+    return session.exec(statement).all()
+
+@app.post("/saved-properties")
+def save_property(listing: SavedListing, session: Session = Depends(get_session)):
+    # Check if already saved
+    statement = select(SavedListing).where(SavedListing.listing_id == listing.listing_id)
+    existing = session.exec(statement).first()
+    if existing:
+        return existing
+        
+    session.add(listing)
+    session.commit()
+    session.refresh(listing)
+    return listing
+
+@app.delete("/saved-properties/{listing_id}")
+def delete_saved_property(listing_id: str, session: Session = Depends(get_session)):
+    statement = select(SavedListing).where(SavedListing.listing_id == listing_id)
+    listing = session.exec(statement).first()
+    if not listing:
+        raise HTTPException(status_code=404, detail="Listing not found")
+        
+    session.delete(listing)
+    session.commit()
+    return {"status": "deleted", "id": listing_id}
 
 
 # Catch-all route: Serve index.html for all non-API routes (SPA routing)
