@@ -3,6 +3,7 @@ window.savedProperties = JSON.parse(localStorage.getItem('saved_properties') || 
 
 window.toggleSave = function (listingId, name, price, area, city, image, type) {
   const idStr = String(listingId);
+  console.log('Toggling save for:', idStr);
   const existing = window.savedProperties.findIndex(p => String(p.id) === idStr);
 
   if (existing !== -1) {
