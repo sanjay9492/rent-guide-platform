@@ -224,87 +224,84 @@
         </div>
 
         <!-- Ask Box -->
-        <div
-          class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md border border-gray-100 dark:border-gray-700 mb-8">
-          <h3 class="font-bold text-lg text-gray-800 dark:text-white mb-4">Ask a Question</h3>
-          <div class="flex gap-4">
-            <input id="new-question-input" type="text" placeholder="e.g., Is HSR Layout safe at night?"
-              class="flex-grow px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            <button onclick="postQuestion()"
-              class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold transition">Post</button>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <input id="new-question-input" type="text" placeholder="e.g., Is HSR Layout safe at night?"
+            class="flex-grow px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <button onclick="postQuestion()"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold transition w-full sm:w-auto">Post</button>
+        </div>
+      </div>
+
+      <!-- Feed -->
+      <div id="qa-feed" class="space-y-6">
+        <!-- Static Q1 -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+          <div class="flex items-center gap-3 mb-2">
+            <div
+              class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">
+              RK</div>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">Rahul K.</span>
+            <span class="text-xs text-gray-400">2 hours ago in Hyderabad</span>
+          </div>
+          <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">Is Gachibowli expensive for students?
+          </h4>
+          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">I'm looking for a PG under 10k. Is it possible?
+          </p>
+
+          <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-xl mb-3">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">Verified
+                Answer</span>
+              <span class="text-xs text-gray-400">RentGuide Team</span>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">It's tough. Most PGs in Gachibowli start at 15k. Try
+              looking in nearby areas like Kondapur or Tolichowki for better rates.</p>
+          </div>
+
+          <!-- Reply Logic -->
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-4 text-sm text-gray-500">
+              <button onclick="toggleReply('q1')" class="hover:text-indigo-600 font-bold">💬 Reply</button>
+              <button class="hover:text-indigo-600">⬆️ 12 Upvotes</button>
+            </div>
+            <div id="reply-box-q1" class="hidden mt-2 flex gap-2">
+              <input type="text" placeholder="Type your reply..."
+                class="flex-grow px-3 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
+              <button onclick="submitReply('q1')"
+                class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Send</button>
+            </div>
           </div>
         </div>
 
-        <!-- Feed -->
-        <div id="qa-feed" class="space-y-6">
-          <!-- Static Q1 -->
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-            <div class="flex items-center gap-3 mb-2">
-              <div
-                class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">
-                RK</div>
-              <span class="text-sm font-bold text-gray-900 dark:text-white">Rahul K.</span>
-              <span class="text-xs text-gray-400">2 hours ago in Hyderabad</span>
-            </div>
-            <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">Is Gachibowli expensive for students?
-            </h4>
-            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">I'm looking for a PG under 10k. Is it possible?
-            </p>
-
-            <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-xl mb-3">
-              <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">Verified
-                  Answer</span>
-                <span class="text-xs text-gray-400">RentGuide Team</span>
-              </div>
-              <p class="text-sm text-gray-700 dark:text-gray-300">It's tough. Most PGs in Gachibowli start at 15k. Try
-                looking in nearby areas like Kondapur or Tolichowki for better rates.</p>
-            </div>
-
-            <!-- Reply Logic -->
-            <div class="flex flex-col gap-2">
-              <div class="flex gap-4 text-sm text-gray-500">
-                <button onclick="toggleReply('q1')" class="hover:text-indigo-600 font-bold">💬 Reply</button>
-                <button class="hover:text-indigo-600">⬆️ 12 Upvotes</button>
-              </div>
-              <div id="reply-box-q1" class="hidden mt-2 flex gap-2">
-                <input type="text" placeholder="Type your reply..."
-                  class="flex-grow px-3 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
-                <button onclick="submitReply('q1')"
-                  class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Send</button>
-              </div>
-            </div>
+        <!-- Static Q2 -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+          <div class="flex items-center gap-3 mb-2">
+            <div
+              class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-xs">
+              PS</div>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">Priya S.</span>
+            <span class="text-xs text-gray-400">1 day ago in Bengaluru</span>
           </div>
+          <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">Does Zolo Stays allow guests?</h4>
+          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Can my parents stay for a weekend?</p>
 
-          <!-- Static Q2 -->
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-            <div class="flex items-center gap-3 mb-2">
-              <div
-                class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-xs">
-                PS</div>
-              <span class="text-sm font-bold text-gray-900 dark:text-white">Priya S.</span>
-              <span class="text-xs text-gray-400">1 day ago in Bengaluru</span>
+          <div id="replies-q2"></div>
+
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-4 text-sm text-gray-500">
+              <button onclick="toggleReply('q2')" class="hover:text-indigo-600 font-bold">💬 Reply</button>
+              <button class="hover:text-indigo-600">⬆️ 8 Upvotes</button>
             </div>
-            <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">Does Zolo Stays allow guests?</h4>
-            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Can my parents stay for a weekend?</p>
-
-            <div id="replies-q2"></div>
-
-            <div class="flex flex-col gap-2">
-              <div class="flex gap-4 text-sm text-gray-500">
-                <button onclick="toggleReply('q2')" class="hover:text-indigo-600 font-bold">💬 Reply</button>
-                <button class="hover:text-indigo-600">⬆️ 8 Upvotes</button>
-              </div>
-              <div id="reply-box-q2" class="hidden mt-2 flex gap-2">
-                <input type="text" placeholder="Type your reply..."
-                  class="flex-grow px-3 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
-                <button onclick="submitReply('q2')"
-                  class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Send</button>
-              </div>
+            <div id="reply-box-q2" class="hidden mt-2 flex gap-2">
+              <input type="text" placeholder="Type your reply..."
+                class="flex-grow px-3 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
+              <button onclick="submitReply('q2')"
+                class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Send</button>
             </div>
           </div>
         </div>
       </div>
+    </div>
     </div>
     </div>
 

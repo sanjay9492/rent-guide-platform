@@ -70,37 +70,31 @@ class CityService:
 
     @staticmethod
     def get_mock_rent_estimate(city_name: str):
-        """Mock rent estimation logic (Indian Context)."""
+        """Mock rent estimation logic (Indian Context) - Hardcoded for Accuracy."""
         city_lower = city_name.lower().strip()
         
-        # Base price in INR for a standard 1BHK
-        base_price = 12000 
-        multiplier = 1.0
+        # Hardcoded 2024 Market Estimations (1BHK Avg)
+        avg = 12000
+        low = 8000
+        high = 15000
         
-        # Indian Tier 1 Cities
-        if "bengaluru" in city_lower or "bangalore" in city_lower: multiplier = 1.8  # ~21.6k
-        elif "mumbai" in city_lower: multiplier = 2.5     # ~30k
-        elif "hyderabad" in city_lower: multiplier = 1.5  # ~18k
-        elif "chennai" in city_lower: multiplier = 1.4    # ~16.8k
-        elif "delhi" in city_lower: multiplier = 1.6      # ~19.2k
-        elif "pune" in city_lower: multiplier = 1.4       # ~16.8k
-        
-        # International Fallback (roughly converted or high tier)
-        elif "new york" in city_lower: multiplier = 8.0
-        elif "london" in city_lower: multiplier = 7.0
-        
-        # Randomize slightly for "live" feel
-        variation = random.uniform(0.9, 1.1)
-        
-        estimated_avg = int(base_price * multiplier * variation)
-        
-        # Round to nearest 100 for cleaner look
-        estimated_avg = round(estimated_avg / 100) * 100
-        
+        if "bengaluru" in city_lower or "bangalore" in city_lower:
+            avg = 22000; low = 18000; high = 28000
+        elif "hyderabad" in city_lower:
+            avg = 18000; low = 14000; high = 24000
+        elif "chennai" in city_lower:
+            avg = 16000; low = 12000; high = 20000
+        elif "mumbai" in city_lower:
+            avg = 35000; low = 28000; high = 45000
+        elif "pune" in city_lower:
+            avg = 17000; low = 13000; high = 22000
+        elif "delhi" in city_lower:
+            avg = 20000; low = 15000; high = 25000
+            
         return {
-            "average_rent": estimated_avg,
-            "range_low": int(estimated_avg * 0.9),
-            "range_high": int(estimated_avg * 1.1),
+            "estimated_rent": avg,
+            "range_low": low,
+            "range_high": high,
             "currency": "₹"
         }
 
