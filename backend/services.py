@@ -26,9 +26,10 @@ class CityService:
                 pages = data.get("query", {}).get("pages", {})
                 for page_id, page_data in pages.items():
                     if page_id != "-1":
-                         # Return the first paragraph or first 300 chars
+                         # Return a much larger chunk or full text
                         extract = page_data.get("extract", "No description available.")
-                        return extract[:400] + "..." if len(extract) > 400 else extract
+                        # Check length, if reasonable return full, else slice larger
+                        return extract[:2000] + "..." if len(extract) > 2000 else extract
                         
                 return "Description not found."
         except Exception as e:
@@ -187,11 +188,31 @@ class CityService:
 
     @staticmethod
     def get_quality_of_life(city_name: str):
-        """Mock quality of life stats."""
-        # In real app, fetch from Teleport API
+        """Mock quality of life stats (Deterministic)."""
+        city_lower = city_name.lower().strip()
+        
+        # Deterministic scores
+        scores = {
+            "bengaluru": {"score": 8.5, "safety": "Moderate", "transport": "Good", "nightlife": "Excellent"},
+            "bangalore": {"score": 8.5, "safety": "Moderate", "transport": "Good", "nightlife": "Excellent"},
+            "hyderabad": {"score": 9.2, "safety": "High", "transport": "Excellent", "nightlife": "Great"},
+            "chennai":   {"score": 8.8, "safety": "High", "transport": "Good", "nightlife": "Moderate"},
+            "mumbai":    {"score": 8.0, "safety": "Moderate", "transport": "Excellent", "nightlife": "Excellent"},
+            "pune":      {"score": 9.0, "safety": "High", "transport": "Good", "nightlife": "Great"},
+            "delhi":     {"score": 7.5, "safety": "Moderate", "transport": "Excellent", "nightlife": "Great"}
+        }
+
+        if city_lower in scores:
+            return scores[city_lower]
+
+        # Seeding for unknown cities to ensure consistency
+        # Simple hash of the string to get a 0-1 float
+        seed = sum(ord(c) for c in city_lower)
+        random.seed(seed) 
+        
         return {
-            "score": round(random.uniform(7.0, 9.8), 1),
+            "score": round(random.uniform(6.0, 9.0), 1),
             "safety": "High",
-            "transport": "Excellent" if len(city_name) > 6 else "Good",
-            "nightlife": "Vibrant"
+            "transport": "Good", 
+            "nightlife": "Moderate"
         }

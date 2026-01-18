@@ -2,67 +2,68 @@
 window.savedProperties = JSON.parse(localStorage.getItem('saved_properties') || '[]');
 
 window.toggleSave = function (listingId, name, price, area, city, image, type) {
-    const existing = window.savedProperties.findIndex(p => p.id === listingId);
+  const idStr = String(listingId);
+  const existing = window.savedProperties.findIndex(p => String(p.id) === idStr);
 
-    if (existing !== -1) {
-        // Remove
-        window.savedProperties.splice(existing, 1);
-        localStorage.setItem('saved_properties', JSON.stringify(window.savedProperties));
+  if (existing !== -1) {
+    // Remove
+    window.savedProperties.splice(existing, 1);
+    localStorage.setItem('saved_properties', JSON.stringify(window.savedProperties));
 
-        // Update UI
-        const btn = document.querySelector(`[onclick*="${listingId}"]`);
-        if (btn) {
-            btn.innerHTML = '🤍';
-            btn.classList.remove('text-red-500');
-            btn.classList.add('text-gray-400');
-        }
-
-        // If on saved page, re-render
-        if (window.location.hash === '#saved') {
-            renderSaved();
-        }
-    } else {
-        // Add
-        window.savedProperties.push({
-            id: listingId,
-            name,
-            price,
-            area,
-            city,
-            image,
-            type,
-            savedAt: new Date().toISOString()
-        });
-        localStorage.setItem('saved_properties', JSON.stringify(window.savedProperties));
-
-        // Update UI
-        const btn = document.querySelector(`[onclick*="${listingId}"]`);
-        if (btn) {
-            btn.innerHTML = '❤️';
-            btn.classList.remove('text-gray-400');
-            btn.classList.add('text-red-500');
-        }
+    // Update UI
+    const btn = document.querySelector(`[onclick*="${listingId}"]`);
+    if (btn) {
+      btn.innerHTML = '🤍';
+      btn.classList.remove('text-red-500');
+      btn.classList.add('text-gray-400');
     }
+
+    // If on saved page, re-render
+    if (window.location.hash === '#saved') {
+      renderSaved();
+    }
+  } else {
+    // Add
+    window.savedProperties.push({
+      id: listingId,
+      name,
+      price,
+      area,
+      city,
+      image,
+      type,
+      savedAt: new Date().toISOString()
+    });
+    localStorage.setItem('saved_properties', JSON.stringify(window.savedProperties));
+
+    // Update UI
+    const btn = document.querySelector(`[onclick*="${listingId}"]`);
+    if (btn) {
+      btn.innerHTML = '❤️';
+      btn.classList.remove('text-gray-400');
+      btn.classList.add('text-red-500');
+    }
+  }
 };
 
 window.isSaved = function (listingId) {
-    return window.savedProperties.some(p => p.id === listingId);
+  return window.savedProperties.some(p => String(p.id) === String(listingId));
 };
 
 function renderSaved() {
-    const grid = document.getElementById('saved-grid');
-    const empty = document.getElementById('empty-saved');
+  const grid = document.getElementById('saved-grid');
+  const empty = document.getElementById('empty-saved');
 
-    if (window.savedProperties.length === 0) {
-        grid.classList.add('hidden');
-        empty.classList.remove('hidden');
-        return;
-    }
+  if (window.savedProperties.length === 0) {
+    grid.classList.add('hidden');
+    empty.classList.remove('hidden');
+    return;
+  }
 
-    grid.classList.remove('hidden');
-    empty.classList.add('hidden');
+  grid.classList.remove('hidden');
+  empty.classList.add('hidden');
 
-    grid.innerHTML = window.savedProperties.map(prop => `
+  grid.innerHTML = window.savedProperties.map(prop => `
     <div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition border border-gray-100 dark:border-gray-700">
       <div class="h-48 relative overflow-hidden">
         <img src="${prop.image}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300?text=${encodeURIComponent(prop.name)}'">
@@ -90,21 +91,21 @@ function renderSaved() {
 
 // Fairness indicator
 window.getFairPriceBadge = function (rent, city, type) {
-    // Average rent data (mock)
-    const avgRents = {
-        'Bengaluru': { PG: 12000, Flat: 25000 },
-        'Hyderabad': { PG: 9000, Flat: 18000 },
-        'Chennai': { PG: 8000, Flat: 16000 }
-    };
+  // Average rent data (mock)
+  const avgRents = {
+    'Bengaluru': { PG: 12000, Flat: 25000 },
+    'Hyderabad': { PG: 9000, Flat: 18000 },
+    'Chennai': { PG: 8000, Flat: 16000 }
+  };
 
-    const avg = avgRents[city]?.[type] || 15000;
-    const diff = ((rent - avg) / avg) * 100;
+  const avg = avgRents[city]?.[type] || 15000;
+  const diff = ((rent - avg) / avg) * 100;
 
-    if (diff < -10) {
-        return `<span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-bold">📉 ${Math.abs(diff).toFixed(0)}% Below Market</span>`;
-    } else if (diff > 10) {
-        return `<span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full font-bold">📈 ${diff.toFixed(0)}% Above Market</span>`;
-    } else {
-        return `<span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-bold">✅ Fair Price</span>`;
-    }
+  if (diff < -10) {
+    return `<span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-bold">📉 ${Math.abs(diff).toFixed(0)}% Below Market</span>`;
+  } else if (diff > 10) {
+    return `<span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full font-bold">📈 ${diff.toFixed(0)}% Above Market</span>`;
+  } else {
+    return `<span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-bold">✅ Fair Price</span>`;
+  }
 };

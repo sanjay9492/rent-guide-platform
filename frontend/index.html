@@ -62,12 +62,12 @@
 
         <!-- Right Actions -->
         <div class="flex items-center gap-4">
-          <!-- New Theme Toggle -->
-          <button id="new-theme-toggle" onclick="toggleTheme()"
-            class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-yellow-300 transition hover:ring-2 ring-indigo-500">
-            <!-- Icon changes via JS -->
-            <span id="theme-icon" class="text-xl">🌙</span>
-          </button>
+          <!-- Auto Theme (Time Based) Indicator -->
+          <div
+            class="hidden sm:flex items-center gap-2 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-xs font-bold text-gray-500 dark:text-gray-400">
+            <span id="theme-status-icon">🕒</span>
+            <span id="theme-status-text">Auto</span>
+          </div>
           <button
             class="hidden sm:block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2.5 rounded-full font-bold shadow-lg hover:shadow-indigo-500/30 transition transform hover:-translate-y-0.5">
             List Property
@@ -602,36 +602,33 @@
   <script type="module" src="/src/saved.js"></script>
   <script type="module" src="/src/main.js"></script>
   <script>
-    // Global Theme Logic
+    // Auto Theme Logic (Time Based)
     const html = document.documentElement;
-    const icon = document.getElementById('theme-icon');
+    const statusText = document.getElementById('theme-status-text');
+    const statusIcon = document.getElementById('theme-status-icon');
 
-    function updateUI(isDark) {
-      if (isDark) {
+    function applyAutoTheme() {
+      const hour = new Date().getHours();
+      // Night is 6 PM (18) to 6 AM (6)
+      const isNight = hour >= 18 || hour < 6;
+
+      if (isNight) {
         html.classList.add('dark');
-        if (icon) icon.innerText = '☀️';
-        localStorage.setItem('theme', 'dark');
+        if (statusText) statusText.innerText = 'Night Mode';
+        if (statusIcon) statusIcon.innerText = '🌙';
       } else {
         html.classList.remove('dark');
-        if (icon) icon.innerText = '🌙';
-        localStorage.setItem('theme', 'light');
+        if (statusText) statusText.innerText = 'Day Mode';
+        if (statusIcon) statusIcon.innerText = '☀️';
       }
+      console.log(`Auto Theme Applied. Hour: ${hour}, Mode: ${isNight ? 'Dark' : 'Light'}`);
     }
 
-    // Initialize
-    const saved = localStorage.getItem('theme');
-    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      updateUI(true);
-    } else {
-      updateUI(false);
-    }
+    // Run on load
+    applyAutoTheme();
 
-    // Public Toggle Function
-    window.toggleTheme = function () {
-      const isDark = html.classList.contains('dark');
-      updateUI(!isDark);
-      console.log('Theme toggled to:', !isDark ? 'Dark' : 'Light');
-    };
+    // Re-check every minute
+    setInterval(applyAutoTheme, 60000);
   </script>
 </body>
 
