@@ -1,5 +1,10 @@
 // Saved Properties Logic (localStorage-based)
-window.savedProperties = JSON.parse(localStorage.getItem('saved_properties') || '[]');
+try {
+  window.savedProperties = JSON.parse(localStorage.getItem('saved_properties') || '[]');
+} catch (e) {
+  console.error("Corrupt saved data, resetting.", e);
+  window.savedProperties = [];
+}
 
 window.toggleSave = function (listingId, name, price, area, city, image, type) {
   const idStr = String(listingId);
