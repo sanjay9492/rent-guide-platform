@@ -11,7 +11,13 @@ if database_url and database_url.startswith("postgres"):
     connect_args = {} # No check_same_thread for Postgres
     engine = create_engine(database_url, echo=False)
 else:
-    sqlite_file_name = "database.db"
+    # Fallback to SQLite
+    # On Vercel (or any read-only cloud env), we must use /tmp
+    if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+        sqlite_file_name = "/tmp/database.db"
+    else:
+        sqlite_file_name = "database.db"
+        
     database_url = f"sqlite:///{sqlite_file_name}"
     connect_args = {"check_same_thread": False}
     engine = create_engine(database_url, echo=True, connect_args=connect_args)
