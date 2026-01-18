@@ -7,28 +7,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RentGuide India</title>
   <style>
-    /* FORCE DARK MODE STYLES (Debug) */
-    html.dark body {
-      background-color: #0f172a !important;
-      color: #f8fafc !important;
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
     }
 
-    html.dark nav {
-      background-color: #1e293b !important;
-      border-color: #334155 !important;
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
     }
 
-    html.dark .bg-white {
-      background-color: #1e293b !important;
-      color: #e2e8f0 !important;
+    html.dark ::-webkit-scrollbar-track {
+      background: #0f172a;
     }
 
-    html.dark .text-gray-900 {
-      color: #f1f5f9 !important;
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
     }
 
-    html.dark .text-gray-600 {
-      color: #cbd5e1 !important;
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
     }
   </style>
 </head>
@@ -122,11 +120,11 @@
           <!-- Search Bar -->
           <div
             class="max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-2 flex border border-gray-100 dark:border-gray-700 transform transition hover:scale-[1.01]">
-            <form id="search-form" class="flex w-full">
+            <form id="search-form" class="flex flex-col sm:flex-row w-full gap-3">
               <input type="text" id="city-input" placeholder="Type a city (e.g. Bengaluru)..."
-                class="flex-grow px-6 py-4 rounded-xl text-lg outline-none text-gray-700 dark:text-white bg-transparent">
+                class="flex-grow px-6 py-4 rounded-xl text-lg outline-none text-gray-700 dark:text-white bg-transparent border border-gray-200 dark:border-gray-700 sm:border-none">
               <button type="submit"
-                class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 dark:shadow-none">
+                class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 dark:shadow-none w-full sm:w-auto">
                 Search
               </button>
             </form>
@@ -358,7 +356,9 @@
         <div class="lg:col-span-2 space-y-8">
           <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
             <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">About the City</h2>
-            <p id="city-description" class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">Loading city
+            <p id="city-description"
+              class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg whitespace-normal break-words">Loading
+              city
               details...</p>
             <div class="mt-6">
               <button id="view-map-btn"
@@ -620,7 +620,7 @@
 
     // Initialize
     const saved = localStorage.getItem('theme');
-    if (saved === 'dark') {
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       updateUI(true);
     } else {
       updateUI(false);
