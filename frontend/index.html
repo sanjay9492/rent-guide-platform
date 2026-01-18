@@ -32,527 +32,514 @@
 </head>
 
 <body
-  class="bg-gray-50 dark:bg-gray-900 flex flex-col min-h-screen font-sans text-gray-900 transition-colors duration-300 relative">
+  class="bg-gray-50 dark:bg-gray-900 flex flex-col min-h-screen font-sans text-gray-900 transition-colors duration-300">
 
-  <!-- Background Image with Overlay -->
-  <div class="fixed inset-0 z-0 pointer-events-none">
-    <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=2000"
-      class="w-full h-full object-cover opacity-40 dark:opacity-30">
-    <div class="absolute inset-0 bg-white/80 dark:bg-gray-900/90"></div>
-  </div>
+  <!-- Navigation -->
+  <nav
+    class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-20 items-center">
+        <!-- Logo -->
+        <div class="flex items-center cursor-pointer group" onclick="window.location.hash = ''">
+          <span class="text-3xl mr-2 group-hover:animate-bounce">🏠</span>
+          <span id="brand-logo"
+            class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-indigo-600 dark:from-orange-400 dark:to-indigo-400">RentGuide.in</span>
+        </div>
 
-  <div class="relative z-10 flex flex-col min-h-screen">
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex space-x-8">
+          <a href="#"
+            class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition">Home</a>
+          <a href="#faq"
+            class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition">Community
+            Q&A</a>
+          <a href="#saved"
+            class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition">❤️
+            Saved</a>
+          <a href="#tips"
+            class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition">Tips</a>
+        </div>
 
-    <!-- Navigation -->
-    <nav
-      class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-20 items-center">
-          <!-- Logo -->
-          <div class="flex items-center cursor-pointer group" onclick="window.location.hash = ''">
-            <span class="text-3xl mr-2 group-hover:animate-bounce">🏠</span>
-            <span id="brand-logo"
-              class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-indigo-600 dark:from-orange-400 dark:to-indigo-400">RentGuide.in</span>
+        <!-- Right Actions -->
+        <div class="flex items-center gap-4">
+          <!-- Auto Theme (Time Based) Indicator -->
+          <div
+            class="hidden sm:flex items-center gap-2 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-xs font-bold text-gray-500 dark:text-gray-400">
+            <span id="theme-status-icon">🕒</span>
+            <span id="theme-status-text">Auto</span>
           </div>
-
-          <!-- Desktop Nav -->
-          <div class="hidden md:flex space-x-8">
-            <a href="#"
-              class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition">Home</a>
-            <a href="#faq"
-              class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition">Community
-              Q&A</a>
-            <a href="#saved"
-              class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition">❤️
-              Saved</a>
-            <a href="#tips"
-              class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition">Tips</a>
-          </div>
-
-          <!-- Right Actions -->
-          <div class="flex items-center gap-4">
-            <!-- Auto Theme (Time Based) Indicator -->
-            <div
-              class="hidden sm:flex items-center gap-2 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-xs font-bold text-gray-500 dark:text-gray-400">
-              <span id="theme-status-icon">🕒</span>
-              <span id="theme-status-text">Auto</span>
-            </div>
-            <button
-              class="hidden sm:block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2.5 rounded-full font-bold shadow-lg hover:shadow-indigo-500/30 transition transform hover:-translate-y-0.5">
-              List Property
-            </button>
-            <!-- Mobile Menu Button -->
-            <button class="md:hidden text-gray-600 dark:text-gray-300 text-2xl" onclick="toggleMobileMenu()">
-              ☰
-            </button>
-          </div>
+          <button
+            class="hidden sm:block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2.5 rounded-full font-bold shadow-lg hover:shadow-indigo-500/30 transition transform hover:-translate-y-0.5">
+            List Property
+          </button>
+          <!-- Mobile Menu Button -->
+          <button class="md:hidden text-gray-600 dark:text-gray-300 text-2xl" onclick="toggleMobileMenu()">
+            ☰
+          </button>
         </div>
       </div>
-      <!-- Mobile Menu Dropdown -->
-      <div id="mobile-menu"
-        class="hidden md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
-        <a href="#"
-          class="block px-4 py-3 text-gray-700 dark:text-gray-200 font-bold border-b border-gray-50 dark:border-gray-800">Home</a>
-        <a href="#faq"
-          class="block px-4 py-3 text-gray-700 dark:text-gray-200 font-bold border-b border-gray-50 dark:border-gray-800">Community
-          Q&A</a>
-        <a href="#saved"
-          class="block px-4 py-3 text-gray-700 dark:text-gray-200 font-bold border-b border-gray-50 dark:border-gray-800">❤️
-          Saved</a>
-        <a href="#tips" class="block px-4 py-3 text-gray-700 dark:text-gray-200 font-bold">Tips</a>
-      </div>
-    </nav>
+    </div>
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu"
+      class="hidden md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
+      <a href="#"
+        class="block px-4 py-3 text-gray-700 dark:text-gray-200 font-bold border-b border-gray-50 dark:border-gray-800">Home</a>
+      <a href="#faq"
+        class="block px-4 py-3 text-gray-700 dark:text-gray-200 font-bold border-b border-gray-50 dark:border-gray-800">Community
+        Q&A</a>
+      <a href="#saved"
+        class="block px-4 py-3 text-gray-700 dark:text-gray-200 font-bold border-b border-gray-50 dark:border-gray-800">❤️
+        Saved</a>
+      <a href="#tips" class="block px-4 py-3 text-gray-700 dark:text-gray-200 font-bold">Tips</a>
+    </div>
+  </nav>
 
-    <!-- Main Content Container -->
-    <main class="flex-grow">
+  <!-- Main Content Container -->
+  <main class="flex-grow">
 
-      <!-- VIEW: HOME -->
-      <section id="home-view" class="view-section transition-opacity duration-300">
-        <!-- Hero -->
-        <div class="relative bg-white dark:bg-gray-900 overflow-hidden">
+    <!-- VIEW: HOME -->
+    <section id="home-view" class="view-section transition-opacity duration-300">
+      <!-- Hero -->
+      <div class="relative bg-white dark:bg-gray-900 overflow-hidden">
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-gray-50 dark:from-gray-800 to-transparent">
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 relative z-10 text-center">
+          <span
+            class="inline-block py-1 px-3 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-sm font-bold mb-6 tracking-wide uppercase">
+            India's Most Trusted Rental Platform
+          </span>
+          <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 dark:text-white mb-6 tracking-tight">
+            Find your perfect <span
+              class="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-pink-600">home.</span>
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
+            Explore verified PGs, Flats, and Co-living spaces in Bengaluru, Hyderabad, and Chennai. No brokerage. No
+            hassle.
+          </p>
+
+          <!-- Search Bar -->
           <div
-            class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-gray-50 dark:from-gray-800 to-transparent">
+            class="max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-2 flex border border-gray-100 dark:border-gray-700 transform transition hover:scale-[1.01]">
+            <form id="search-form" class="flex flex-col sm:flex-row w-full gap-3">
+              <input type="text" id="city-input" placeholder="Type a city (e.g. Bengaluru)..."
+                class="flex-grow px-6 py-4 rounded-xl text-lg outline-none text-gray-700 dark:text-white bg-transparent border border-gray-200 dark:border-gray-700 sm:border-none">
+              <button type="submit"
+                class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 dark:shadow-none w-full sm:w-auto">
+                Search
+              </button>
+            </form>
           </div>
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 relative z-10 text-center">
-            <span
-              class="inline-block py-1 px-3 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-sm font-bold mb-6 tracking-wide uppercase">
-              India's Most Trusted Rental Platform
-            </span>
-            <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 dark:text-white mb-6 tracking-tight">
-              Find your perfect <span
-                class="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-pink-600">home.</span>
-            </h1>
-            <p class="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
-              Explore verified PGs, Flats, and Co-living spaces in Bengaluru, Hyderabad, and Chennai. No brokerage. No
-              hassle.
+
+        </div>
+      </div>
+
+      <!-- Featured Cities (Indian Focus) -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Popular Hubs</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          <!-- Bengaluru -->
+          <div
+            class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition duration-500 group cursor-pointer border border-gray-100 dark:border-gray-700"
+            onclick="window.location.hash='#city/Bengaluru'">
+            <div class="h-64 overflow-hidden relative">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+              <!-- New Bengaluru Image -->
+              <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800"
+                onerror="this.src='https://placehold.co/800x600?text=Bengaluru+City'"
+                class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Bengaluru">
+              <div class="absolute bottom-6 left-6 z-20">
+                <h3 class="text-3xl font-bold text-white mb-2">Bengaluru</h3>
+                <p class="text-gray-200 text-sm font-medium">Silicon Valley • ₹20k+ Rent</p>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Tech capital of India. Best for startups and
+                nightlife.</p>
+              <button
+                class="w-full py-2 bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-300 rounded-lg font-bold text-sm">Explore
+                Listings</button>
+            </div>
+          </div>
+
+          <!-- Hyderabad -->
+          <div
+            class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition duration-500 group cursor-pointer border border-gray-100 dark:border-gray-700"
+            onclick="window.location.hash='#city/Hyderabad'">
+            <div class="h-64 overflow-hidden relative">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+              <!-- New Hyderabad Image -->
+              <img src="https://images.unsplash.com/photo-1628126235206-52605338b2d1?auto=format&fit=crop&w=800"
+                onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiM2MzY2ZjEiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iNDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5IeWRlcmFiYWQgKENpdHkgb2YgUGVhcmxzKTwvdGV4dD48L3N2Zz4='; this.onerror=null;"
+                class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Hyderabad">
+              <div class="absolute bottom-6 left-6 z-20">
+                <h3 class="text-3xl font-bold text-white mb-2">Hyderabad</h3>
+                <p class="text-gray-200 text-sm font-medium">City of Pearls • ₹15k+ Rent</p>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Affordable living, great food, and booming IT
+                sector.</p>
+              <button
+                class="w-full py-2 bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-300 rounded-lg font-bold text-sm">Explore
+                Listings</button>
+            </div>
+          </div>
+
+          <!-- Chennai -->
+          <div
+            class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition duration-500 group cursor-pointer border border-gray-100 dark:border-gray-700"
+            onclick="window.location.hash='#city/Chennai'">
+            <div class="h-64 overflow-hidden relative">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+              <!-- New Chennai Image -->
+              <img src="https://images.unsplash.com/photo-1616843413587-9e3a37f7bbd8?auto=format&fit=crop&w=800"
+                onerror="this.src='https://placehold.co/800x600?text=Chennai+City'"
+                class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Chennai">
+              <div class="absolute bottom-6 left-6 z-20">
+                <h3 class="text-3xl font-bold text-white mb-2">Chennai</h3>
+                <p class="text-gray-200 text-sm font-medium">Coastal Hub • ₹12k+ Rent</p>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Cultural richness meets coastal vibes. Safe and
+                traditional.</p>
+              <button
+                class="w-full py-2 bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-300 rounded-lg font-bold text-sm">Explore
+                Listings</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: FAQ (Community Q&A) -->
+    <div id="faq-view" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+      <div class="max-w-3xl mx-auto px-4">
+        <div class="text-center mb-10">
+          <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">Community Q&A</h1>
+          <p class="text-gray-600 dark:text-gray-400">Ask questions, get answers from the community and verified
+            brokers.</p>
+        </div>
+
+        <!-- Ask Box -->
+        <div
+          class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md border border-gray-100 dark:border-gray-700 mb-8">
+          <h3 class="font-bold text-lg text-gray-800 dark:text-white mb-4">Ask a Question</h3>
+          <div class="flex gap-4">
+            <input id="new-question-input" type="text" placeholder="e.g., Is HSR Layout safe at night?"
+              class="flex-grow px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <button onclick="postQuestion()"
+              class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold transition">Post</button>
+          </div>
+        </div>
+
+        <!-- Feed -->
+        <div id="qa-feed" class="space-y-6">
+          <!-- Static Q1 -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center gap-3 mb-2">
+              <div
+                class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">
+                RK</div>
+              <span class="text-sm font-bold text-gray-900 dark:text-white">Rahul K.</span>
+              <span class="text-xs text-gray-400">2 hours ago in Hyderabad</span>
+            </div>
+            <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">Is Gachibowli expensive for students?
+            </h4>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">I'm looking for a PG under 10k. Is it possible?
             </p>
 
-            <!-- Search Bar -->
-            <div
-              class="max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-2 flex border border-gray-100 dark:border-gray-700 transform transition hover:scale-[1.01]">
-              <form id="search-form" class="flex flex-col sm:flex-row w-full gap-3">
-                <input type="text" id="city-input" placeholder="Type a city (e.g. Bengaluru)..."
-                  class="flex-grow px-6 py-4 rounded-xl text-lg outline-none text-gray-700 dark:text-white bg-transparent border border-gray-200 dark:border-gray-700 sm:border-none">
-                <button type="submit"
-                  class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 dark:shadow-none w-full sm:w-auto">
-                  Search
-                </button>
-              </form>
+            <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-xl mb-3">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">Verified
+                  Answer</span>
+                <span class="text-xs text-gray-400">RentGuide Team</span>
+              </div>
+              <p class="text-sm text-gray-700 dark:text-gray-300">It's tough. Most PGs in Gachibowli start at 15k. Try
+                looking in nearby areas like Kondapur or Tolichowki for better rates.</p>
             </div>
 
+            <!-- Reply Logic -->
+            <div class="flex flex-col gap-2">
+              <div class="flex gap-4 text-sm text-gray-500">
+                <button onclick="toggleReply('q1')" class="hover:text-indigo-600 font-bold">💬 Reply</button>
+                <button class="hover:text-indigo-600">⬆️ 12 Upvotes</button>
+              </div>
+              <div id="reply-box-q1" class="hidden mt-2 flex gap-2">
+                <input type="text" placeholder="Type your reply..."
+                  class="flex-grow px-3 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
+                <button onclick="submitReply('q1')"
+                  class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Send</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Static Q2 -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center gap-3 mb-2">
+              <div
+                class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-xs">
+                PS</div>
+              <span class="text-sm font-bold text-gray-900 dark:text-white">Priya S.</span>
+              <span class="text-xs text-gray-400">1 day ago in Bengaluru</span>
+            </div>
+            <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">Does Zolo Stays allow guests?</h4>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Can my parents stay for a weekend?</p>
+
+            <div id="replies-q2"></div>
+
+            <div class="flex flex-col gap-2">
+              <div class="flex gap-4 text-sm text-gray-500">
+                <button onclick="toggleReply('q2')" class="hover:text-indigo-600 font-bold">💬 Reply</button>
+                <button class="hover:text-indigo-600">⬆️ 8 Upvotes</button>
+              </div>
+              <div id="reply-box-q2" class="hidden mt-2 flex gap-2">
+                <input type="text" placeholder="Type your reply..."
+                  class="flex-grow px-3 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
+                <button onclick="submitReply('q2')"
+                  class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Send</button>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+    </div>
 
-        <!-- Featured Cities (Indian Focus) -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Popular Hubs</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- VIEW: SAVED PROPERTIES -->
+    <div id="saved-view" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-10">
+          <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">❤️ Your Saved Properties</h1>
+          <p class="text-gray-600 dark:text-gray-400">Quick access to properties you've shortlisted</p>
+        </div>
 
-            <!-- Bengaluru -->
-            <div
-              class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition duration-500 group cursor-pointer border border-gray-100 dark:border-gray-700"
-              onclick="window.location.hash='#city/Bengaluru'">
-              <div class="h-64 overflow-hidden relative">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                <!-- New Bengaluru Image -->
-                <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800"
-                  onerror="this.src='https://placehold.co/800x600?text=Bengaluru+City'"
-                  class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Bengaluru">
-                <div class="absolute bottom-6 left-6 z-20">
-                  <h3 class="text-3xl font-bold text-white mb-2">Bengaluru</h3>
-                  <p class="text-gray-200 text-sm font-medium">Silicon Valley • ₹20k+ Rent</p>
-                </div>
-              </div>
-              <div class="p-6">
-                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Tech capital of India. Best for startups and
-                  nightlife.</p>
-                <button
-                  class="w-full py-2 bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-300 rounded-lg font-bold text-sm">Explore
-                  Listings</button>
-              </div>
-            </div>
+        <div id="saved-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Dynamic content here -->
+        </div>
 
-            <!-- Hyderabad -->
-            <div
-              class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition duration-500 group cursor-pointer border border-gray-100 dark:border-gray-700"
-              onclick="window.location.hash='#city/Hyderabad'">
-              <div class="h-64 overflow-hidden relative">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                <!-- New Hyderabad Image -->
-                <img src="https://images.unsplash.com/photo-1628126235206-52605338b2d1?auto=format&fit=crop&w=800"
-                  onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiM2MzY2ZjEiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iNDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5IeWRlcmFiYWQgKENpdHkgb2YgUGVhcmxzKTwvdGV4dD48L3N2Zz4='; this.onerror=null;"
-                  class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Hyderabad">
-                <div class="absolute bottom-6 left-6 z-20">
-                  <h3 class="text-3xl font-bold text-white mb-2">Hyderabad</h3>
-                  <p class="text-gray-200 text-sm font-medium">City of Pearls • ₹15k+ Rent</p>
-                </div>
-              </div>
-              <div class="p-6">
-                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Affordable living, great food, and booming IT
-                  sector.</p>
-                <button
-                  class="w-full py-2 bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-300 rounded-lg font-bold text-sm">Explore
-                  Listings</button>
-              </div>
-            </div>
+        <div id="empty-saved" class="hidden text-center py-20">
+          <div class="text-6xl mb-4">💔</div>
+          <h3 class="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-2">No Saved Properties Yet</h3>
+          <p class="text-gray-500 dark:text-gray-400 mb-6">Start exploring cities and save your favorite listings!</p>
+          <a href="#"
+            class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-700 transition">
+            Browse Cities
+          </a>
+        </div>
+      </div>
+    </div>
 
-            <!-- Chennai -->
-            <div
-              class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition duration-500 group cursor-pointer border border-gray-100 dark:border-gray-700"
-              onclick="window.location.hash='#city/Chennai'">
-              <div class="h-64 overflow-hidden relative">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                <!-- New Chennai Image -->
-                <img src="https://images.unsplash.com/photo-1616843413587-9e3a37f7bbd8?auto=format&fit=crop&w=800"
-                  onerror="this.src='https://placehold.co/800x600?text=Chennai+City'"
-                  class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Chennai">
-                <div class="absolute bottom-6 left-6 z-20">
-                  <h3 class="text-3xl font-bold text-white mb-2">Chennai</h3>
-                  <p class="text-gray-200 text-sm font-medium">Coastal Hub • ₹12k+ Rent</p>
-                </div>
-              </div>
-              <div class="p-6">
-                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Cultural richness meets coastal vibes. Safe and
-                  traditional.</p>
-                <button
-                  class="w-full py-2 bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-300 rounded-lg font-bold text-sm">Explore
-                  Listings</button>
-              </div>
-            </div>
 
+    <!-- VIEW: CITY DETAIL (Reused) -->
+    <section id="city-view" class="view-section hidden">
+      <!-- Header Image -->
+      <div class="relative h-64 md:h-96 bg-gray-200">
+        <img id="city-hero-img" class="w-full h-full object-cover" src="" alt="City">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 w-full max-w-7xl mx-auto">
+          <h1 id="city-name" class="text-5xl md:text-6xl font-bold text-white shadow-sm mb-2">---</h1>
+          <div class="flex space-x-2">
+            <span class="bg-white/20 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm">India • Tier 1</span>
           </div>
         </div>
-      </section>
+        <button onclick="window.location.hash=''"
+          class="absolute top-6 left-6 bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-full hover:bg-white/20 transition flex items-center gap-2">
+          ← Back to Search
+        </button>
+      </div>
 
-      <!-- VIEW: FAQ (Community Q&A) -->
-      <div id="faq-view" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
-        <div class="max-w-3xl mx-auto px-4">
-          <div class="text-center mb-10">
-            <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">Community Q&A</h1>
-            <p class="text-gray-600 dark:text-gray-400">Ask questions, get answers from the community and verified
-              brokers.</p>
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8 transform -translate-y-12">
+        <!-- Left Column -->
+        <div class="lg:col-span-2 space-y-8">
+          <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">About the City</h2>
+            <p id="city-description"
+              class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg whitespace-normal break-words">Loading
+              city
+              details...</p>
+            <div class="mt-6">
+              <button id="view-map-btn"
+                class="bg-blue-100 text-blue-700 px-6 py-2 rounded-lg font-semibold hover:bg-blue-200 transition flex items-center gap-2">
+                📍 View on Google Maps
+              </button>
+            </div>
           </div>
 
-          <!-- Ask Box -->
+          <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Quality of Life</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="qol-stats"></div>
+          </div>
+
+          <!-- Areas -->
+          <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">1. Explore Popular Areas</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Click an area to see listings.</p>
+            <div class="flex overflow-x-auto gap-4 pb-4" id="areas-list"></div>
+          </div>
+
+          <!-- Listings -->
+          <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700"
+            id="listings-section">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+              <div>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white" id="listings-title">2. Available Listings
+                </h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400" id="listings-subtitle">Showing all properties</p>
+              </div>
+              <div class="flex gap-4 items-center w-full md:w-auto">
+                <div class="relative w-full md:w-64">
+                  <input type="text" id="listing-search" placeholder="Search Listings..."
+                    class="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div class="flex bg-gray-100 dark:bg-gray-700 p-1 rounded-lg shrink-0">
+                  <button onclick="filterListings('All')" id="tab-all"
+                    class="px-4 py-2 rounded-md text-sm font-bold bg-white dark:bg-gray-600 shadow text-gray-800 dark:text-white transition">All</button>
+                  <button onclick="filterListings('PG')" id="tab-pg"
+                    class="px-4 py-2 rounded-md text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition">PGs</button>
+                  <button onclick="filterListings('Flat')" id="tab-flat"
+                    class="px-4 py-2 rounded-md text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition">Flats</button>
+                </div>
+              </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6" id="listings-list"></div>
+          </div>
+
+          <!-- Reviews Section -->
           <div
-            class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md border border-gray-100 dark:border-gray-700 mb-8">
-            <h3 class="font-bold text-lg text-gray-800 dark:text-white mb-4">Ask a Question</h3>
-            <div class="flex gap-4">
-              <input id="new-question-input" type="text" placeholder="e.g., Is HSR Layout safe at night?"
-                class="flex-grow px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <button onclick="postQuestion()"
-                class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold transition">Post</button>
-            </div>
-          </div>
+            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 mt-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">3. Tenant Reviews</h2>
 
-          <!-- Feed -->
-          <div id="qa-feed" class="space-y-6">
-            <!-- Static Q1 -->
-            <div
-              class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-              <div class="flex items-center gap-3 mb-2">
-                <div
-                  class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">
-                  RK</div>
-                <span class="text-sm font-bold text-gray-900 dark:text-white">Rahul K.</span>
-                <span class="text-xs text-gray-400">2 hours ago in Hyderabad</span>
+            <!-- Review Form -->
+            <form id="review-form"
+              class="mb-8 bg-gray-50 dark:bg-gray-700/50 p-6 rounded-xl border border-gray-200 dark:border-gray-600">
+              <h4 class="font-bold text-gray-700 dark:text-gray-200 mb-4">Share your experience</h4>
+              <div class="grid grid-cols-2 gap-4 mb-4">
+                <input type="number" id="rev-rent" placeholder="Rent (₹)" required
+                  class="px-4 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <select id="rev-type"
+                  class="px-4 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                  <option value="PG">PG</option>
+                  <option value="Flat">Flat</option>
+                </select>
               </div>
-              <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">Is Gachibowli expensive for students?
-              </h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">I'm looking for a PG under 10k. Is it possible?
-              </p>
+              <textarea id="rev-comment" placeholder="How is the water? Owner behavior? Area safety?" required
+                class="w-full px-4 py-2 mb-4 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white h-24"></textarea>
+              <button type="submit"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700 transition">
+                Submit Review
+              </button>
+            </form>
 
-              <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-xl mb-3">
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">Verified
-                    Answer</span>
-                  <span class="text-xs text-gray-400">RentGuide Team</span>
-                </div>
-                <p class="text-sm text-gray-700 dark:text-gray-300">It's tough. Most PGs in Gachibowli start at 15k. Try
-                  looking in nearby areas like Kondapur or Tolichowki for better rates.</p>
-              </div>
-
-              <!-- Reply Logic -->
-              <div class="flex flex-col gap-2">
-                <div class="flex gap-4 text-sm text-gray-500">
-                  <button onclick="toggleReply('q1')" class="hover:text-indigo-600 font-bold">💬 Reply</button>
-                  <button class="hover:text-indigo-600">⬆️ 12 Upvotes</button>
-                </div>
-                <div id="reply-box-q1" class="hidden mt-2 flex gap-2">
-                  <input type="text" placeholder="Type your reply..."
-                    class="flex-grow px-3 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
-                  <button onclick="submitReply('q1')"
-                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Send</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Static Q2 -->
-            <div
-              class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-              <div class="flex items-center gap-3 mb-2">
-                <div
-                  class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-xs">
-                  PS</div>
-                <span class="text-sm font-bold text-gray-900 dark:text-white">Priya S.</span>
-                <span class="text-xs text-gray-400">1 day ago in Bengaluru</span>
-              </div>
-              <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">Does Zolo Stays allow guests?</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Can my parents stay for a weekend?</p>
-
-              <div id="replies-q2"></div>
-
-              <div class="flex flex-col gap-2">
-                <div class="flex gap-4 text-sm text-gray-500">
-                  <button onclick="toggleReply('q2')" class="hover:text-indigo-600 font-bold">💬 Reply</button>
-                  <button class="hover:text-indigo-600">⬆️ 8 Upvotes</button>
-                </div>
-                <div id="reply-box-q2" class="hidden mt-2 flex gap-2">
-                  <input type="text" placeholder="Type your reply..."
-                    class="flex-grow px-3 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
-                  <button onclick="submitReply('q2')"
-                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Send</button>
-                </div>
-              </div>
+            <!-- Reviews List -->
+            <div id="reviews-list" class="space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
+              <!-- Populated by JS -->
             </div>
           </div>
         </div>
-      </div>
-  </div>
 
-  <!-- VIEW: SAVED PROPERTIES -->
-  <div id="saved-view" class="hidden min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="text-center mb-10">
-        <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">❤️ Your Saved Properties</h1>
-        <p class="text-gray-600 dark:text-gray-400">Quick access to properties you've shortlisted</p>
-      </div>
-
-      <div id="saved-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Dynamic content here -->
-      </div>
-
-      <div id="empty-saved" class="hidden text-center py-20">
-        <div class="text-6xl mb-4">💔</div>
-        <h3 class="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-2">No Saved Properties Yet</h3>
-        <p class="text-gray-500 dark:text-gray-400 mb-6">Start exploring cities and save your favorite listings!</p>
-        <a href="#"
-          class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-700 transition">
-          Browse Cities
-        </a>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- VIEW: CITY DETAIL (Reused) -->
-  <section id="city-view" class="view-section hidden">
-    <!-- Header Image -->
-    <div class="relative h-64 md:h-96 bg-gray-200">
-      <img id="city-hero-img" class="w-full h-full object-cover" src="" alt="City">
-      <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-      <div class="absolute bottom-0 left-0 p-8 w-full max-w-7xl mx-auto">
-        <h1 id="city-name" class="text-5xl md:text-6xl font-bold text-white shadow-sm mb-2">---</h1>
-        <div class="flex space-x-2">
-          <span class="bg-white/20 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm">India • Tier 1</span>
-        </div>
-      </div>
-      <button onclick="window.location.hash=''"
-        class="absolute top-6 left-6 bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-full hover:bg-white/20 transition flex items-center gap-2">
-        ← Back to Search
-      </button>
-    </div>
-
-    <div
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8 transform -translate-y-12">
-      <!-- Left Column -->
-      <div class="lg:col-span-2 space-y-8">
-        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
-          <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">About the City</h2>
-          <p id="city-description"
-            class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg whitespace-normal break-words">Loading
-            city
-            details...</p>
-          <div class="mt-6">
-            <button id="view-map-btn"
-              class="bg-blue-100 text-blue-700 px-6 py-2 rounded-lg font-semibold hover:bg-blue-200 transition flex items-center gap-2">
-              📍 View on Google Maps
-            </button>
-          </div>
-        </div>
-
-        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
-          <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Quality of Life</h2>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="qol-stats"></div>
-        </div>
-
-        <!-- Areas -->
-        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
-          <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">1. Explore Popular Areas</h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Click an area to see listings.</p>
-          <div class="flex overflow-x-auto gap-4 pb-4" id="areas-list"></div>
-        </div>
-
-        <!-- Listings -->
-        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700"
-          id="listings-section">
-          <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-            <div>
-              <h2 class="text-2xl font-bold text-gray-800 dark:text-white" id="listings-title">2. Available Listings
-              </h2>
-              <p class="text-sm text-gray-500 dark:text-gray-400" id="listings-subtitle">Showing all properties</p>
+        <!-- Right Column -->
+        <div class="lg:col-span-1">
+          <div
+            class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-2xl border border-orange-50 dark:border-gray-700 sticky top-24">
+            <h3 class="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-widest mb-2">Rent
+              Estimate</h3>
+            <div class="flex items-baseline mb-1">
+              <span id="est-rent" class="text-4xl font-extrabold text-gray-900 dark:text-white">---</span>
             </div>
-            <div class="flex gap-4 items-center w-full md:w-auto">
-              <div class="relative w-full md:w-64">
-                <input type="text" id="listing-search" placeholder="Search Listings..."
-                  class="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              </div>
-              <div class="flex bg-gray-100 dark:bg-gray-700 p-1 rounded-lg shrink-0">
-                <button onclick="filterListings('All')" id="tab-all"
-                  class="px-4 py-2 rounded-md text-sm font-bold bg-white dark:bg-gray-600 shadow text-gray-800 dark:text-white transition">All</button>
-                <button onclick="filterListings('PG')" id="tab-pg"
-                  class="px-4 py-2 rounded-md text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition">PGs</button>
-                <button onclick="filterListings('Flat')" id="tab-flat"
-                  class="px-4 py-2 rounded-md text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition">Flats</button>
-              </div>
-            </div>
-          </div>
-          <div class="grid md:grid-cols-2 gap-6" id="listings-list"></div>
-        </div>
-
-        <!-- Reviews Section -->
-        <div
-          class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 mt-8">
-          <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">3. Tenant Reviews</h2>
-
-          <!-- Review Form -->
-          <form id="review-form"
-            class="mb-8 bg-gray-50 dark:bg-gray-700/50 p-6 rounded-xl border border-gray-200 dark:border-gray-600">
-            <h4 class="font-bold text-gray-700 dark:text-gray-200 mb-4">Share your experience</h4>
-            <div class="grid grid-cols-2 gap-4 mb-4">
-              <input type="number" id="rev-rent" placeholder="Rent (₹)" required
-                class="px-4 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-              <select id="rev-type"
-                class="px-4 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                <option value="PG">PG</option>
-                <option value="Flat">Flat</option>
-              </select>
-            </div>
-            <textarea id="rev-comment" placeholder="How is the water? Owner behavior? Area safety?" required
-              class="w-full px-4 py-2 mb-4 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white h-24"></textarea>
-            <button type="submit"
-              class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700 transition">
-              Submit Review
-            </button>
-          </form>
-
-          <!-- Reviews List -->
-          <div id="reviews-list" class="space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
-            <!-- Populated by JS -->
+            <div id="est-range" class="text-sm text-gray-400 mb-6 font-medium">Range: ---</div>
+            <button onclick="openModal('Generic Inquiry')"
+              class="w-full bg-orange-600 text-white py-4 rounded-xl font-bold hover:bg-orange-700 shadow-lg">Check
+              Availability</button>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Right Column -->
-      <div class="lg:col-span-1">
+    <!-- VIEW: MAP -->
+    <section id="map-view" class="view-section hidden h-[calc(100vh-64px)] w-full relative">
+      <button onclick="window.history.back()"
+        class="absolute top-4 left-4 z-10 bg-white shadow-md px-4 py-2 rounded-lg font-bold text-gray-800">←
+        Back</button>
+      <div id="map-container" class="w-full h-full bg-gray-100 flex items-center justify-center">Loading Map...</div>
+    </section>
+
+    <!-- VIEW: TIPS (Redesigned) -->
+    <section id="tips-view" class="view-section hidden max-w-5xl mx-auto px-4 py-16">
+      <div class="text-center mb-16">
+        <h1 class="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white">Rental Smart Guide</h1>
+        <p class="text-xl text-gray-500 dark:text-gray-400">Avoid scams and save money with these pro tips.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Tip 1 -->
         <div
-          class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-2xl border border-orange-50 dark:border-gray-700 sticky top-24">
-          <h3 class="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-widest mb-2">Rent
-            Estimate</h3>
-          <div class="flex items-baseline mb-1">
-            <span id="est-rent" class="text-4xl font-extrabold text-gray-900 dark:text-white">---</span>
-          </div>
-          <div id="est-range" class="text-sm text-gray-400 mb-6 font-medium">Range: ---</div>
-          <button onclick="openModal('Generic Inquiry')"
-            class="w-full bg-orange-600 text-white py-4 rounded-xl font-bold hover:bg-orange-700 shadow-lg">Check
-            Availability</button>
+          class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
+          <div
+            class="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
+            📝</div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">The "11-Month" Rule</h3>
+          <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">Most agreements are for 11 months to
+            bypass mandatory registration. If you plan to stay longer, ask for a registered lease for safety.</p>
+        </div>
+        <!-- Tip 2 -->
+        <div
+          class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
+          <div
+            class="w-14 h-14 bg-pink-100 dark:bg-pink-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
+            🎨</div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Painting Charges</h3>
+          <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">Landlords in Bengaluru often deduct 1
+            month's rent for "painting" upon exit. innovative! Negotiate this clause <strong>before</strong> signing.
+          </p>
+        </div>
+        <!-- Tip 3 -->
+        <div
+          class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
+          <div
+            class="w-14 h-14 bg-green-100 dark:bg-green-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
+            👮</div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Police Verification</h3>
+          <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">It's mandatory in many cities. PGs usually
+            handle this, but for flats, ensure the owner submits your details to the local station.</p>
+        </div>
+        <!-- Tip 4 -->
+        <div
+          class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
+          <div
+            class="w-14 h-14 bg-orange-100 dark:bg-orange-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
+            🚫</div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">No Brokers!</h3>
+          <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">Never pay a "visiting fee" to see a house.
+            Genuine brokers charge only after deal closure. On RentGuide, you pay zero brokerage.</p>
+        </div>
+        <!-- Tip 5 -->
+        <div
+          class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
+          <div
+            class="w-14 h-14 bg-blue-100 dark:bg-blue-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
+            💧</div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Water & Maintenance</h3>
+          <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">Check if water charges are fixed or
+            metered. In summer, tanker costs can spike maintenance bills significantly.</p>
+        </div>
+        <!-- Tip 6 -->
+        <div
+          class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
+          <div
+            class="w-14 h-14 bg-purple-100 dark:bg-purple-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
+            🔒</div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Security Deposit</h3>
+          <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">Don't agree to 10 months blindly. The
+            Model Tenancy Act suggests 2 months. Negotiate hard — 5-6 months is the new norm in Bangalore.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- VIEW: MAP -->
-  <section id="map-view" class="view-section hidden h-[calc(100vh-64px)] w-full relative">
-    <button onclick="window.history.back()"
-      class="absolute top-4 left-4 z-10 bg-white shadow-md px-4 py-2 rounded-lg font-bold text-gray-800">←
-      Back</button>
-    <div id="map-container" class="w-full h-full bg-gray-100 flex items-center justify-center">Loading Map...</div>
-  </section>
-
-  <!-- VIEW: TIPS (Redesigned) -->
-  <section id="tips-view" class="view-section hidden max-w-5xl mx-auto px-4 py-16">
-    <div class="text-center mb-16">
-      <h1 class="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white">Rental Smart Guide</h1>
-      <p class="text-xl text-gray-500 dark:text-gray-400">Avoid scams and save money with these pro tips.</p>
-    </div>
-
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Tip 1 -->
-      <div
-        class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
-        <div
-          class="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
-          📝</div>
-        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">The "11-Month" Rule</h3>
-        <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">Most agreements are for 11 months to
-          bypass mandatory registration. If you plan to stay longer, ask for a registered lease for safety.</p>
-      </div>
-      <!-- Tip 2 -->
-      <div
-        class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
-        <div
-          class="w-14 h-14 bg-pink-100 dark:bg-pink-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
-          🎨</div>
-        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Painting Charges</h3>
-        <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">Landlords in Bengaluru often deduct 1
-          month's rent for "painting" upon exit. innovative! Negotiate this clause <strong>before</strong> signing.
-        </p>
-      </div>
-      <!-- Tip 3 -->
-      <div
-        class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
-        <div
-          class="w-14 h-14 bg-green-100 dark:bg-green-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
-          👮</div>
-        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Police Verification</h3>
-        <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">It's mandatory in many cities. PGs usually
-          handle this, but for flats, ensure the owner submits your details to the local station.</p>
-      </div>
-      <!-- Tip 4 -->
-      <div
-        class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
-        <div
-          class="w-14 h-14 bg-orange-100 dark:bg-orange-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
-          🚫</div>
-        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">No Brokers!</h3>
-        <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">Never pay a "visiting fee" to see a house.
-          Genuine brokers charge only after deal closure. On RentGuide, you pay zero brokerage.</p>
-      </div>
-      <!-- Tip 5 -->
-      <div
-        class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
-        <div
-          class="w-14 h-14 bg-blue-100 dark:bg-blue-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
-          💧</div>
-        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Water & Maintenance</h3>
-        <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">Check if water charges are fixed or
-          metered. In summer, tanker costs can spike maintenance bills significantly.</p>
-      </div>
-      <!-- Tip 6 -->
-      <div
-        class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:-translate-y-1 transition duration-300">
-        <div
-          class="w-14 h-14 bg-purple-100 dark:bg-purple-900/50 rounded-2xl flex items-center justify-center text-3xl mb-6">
-          🔒</div>
-        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Security Deposit</h3>
-        <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">Don't agree to 10 months blindly. The
-          Model Tenancy Act suggests 2 months. Negotiate hard — 5-6 months is the new norm in Bangalore.</p>
-      </div>
-    </div>
-  </section>
-  </section>
+    </section>
+    </section>
   </main>
-  </div> <!-- End relative z-10 wrapper -->
 
   <!-- MODALS -->
   <!-- List Property Modal -->
@@ -661,14 +648,10 @@
 
       if (isNight) {
         html.classList.add('dark');
-        document.body.style.backgroundColor = '#111827'; // Force dark bg
-        document.body.style.color = '#f9fafb';
         if (statusText) statusText.innerText = 'Night Mode';
         if (statusIcon) statusIcon.innerText = '🌙';
       } else {
         html.classList.remove('dark');
-        document.body.style.backgroundColor = '#f9fafb'; // Force light bg
-        document.body.style.color = '#111827';
         if (statusText) statusText.innerText = 'Day Mode';
         if (statusIcon) statusIcon.innerText = '☀️';
       }
