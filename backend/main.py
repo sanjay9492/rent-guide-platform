@@ -67,7 +67,7 @@ async def get_city_info(city_name: str):
     # Fetch data
     description = await CityService.get_city_description(city_name)
     images = CityService.get_mock_images(city_name)
-    rent_est = CityService.get_mock_rent_estimate(city_name)
+    rent_est = await CityService.get_rent_stats(city_name) # Used new async method
     qol = CityService.get_quality_of_life(city_name)
     areas = CityService.get_areas(city_name)
     listings = CityService.get_listings(city_name)
@@ -82,6 +82,10 @@ async def get_city_info(city_name: str):
         "listings": listings
     }
 
+@app.get("/search")
+async def search(q: str, city: Optional[str] = None):
+    return await CityService.search_properties(q, city)
+
 # Deprecated/Legacy endpoint kept for backward compatibility if needed, 
 # or repurposed for simple estimate checks.
 class EstimateRequest(BaseModel):
@@ -90,9 +94,9 @@ class EstimateRequest(BaseModel):
     bathrooms: int
 
 @app.post("/estimate")
-def estimate_rent(data: EstimateRequest):
+async def estimate_rent(data: EstimateRequest):
     # Re-use logic for specific apartment sizing
-    base_data = CityService.get_mock_rent_estimate(data.city)
+    base_data = await CityService.get_rent_stats(data.city)
     base_avg = base_data["average_rent"]
     
     # Adjust for rooms
@@ -125,9 +129,19 @@ from fastapi import Depends, HTTPException
 def on_startup():
     create_db_and_tables()
 
-# Reviews
+# Reviews - Support both /reviews and /reviews/{city} endpoints
 @app.post("/reviews")
 def create_review(review: RentReview, session: Session = Depends(get_session)):
+    session.add(review)
+    session.commit()
+    session.refresh(review)
+    return review
+
+@app.post("/reviews/{city}")
+def create_review_for_city(city: str, review: RentReview, session: Session = Depends(get_session)):
+    # Set the city if not already provided in the review object
+    if not review.city:
+        review.city = city
     session.add(review)
     session.commit()
     session.refresh(review)

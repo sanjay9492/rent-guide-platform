@@ -623,40 +623,4 @@ window.likeReview = async (id) => {
   }
 };
 
-// Handle Review Submission
-const reviewForm = document.getElementById('review-form');
-if (reviewForm) {
-  reviewForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const rent = document.getElementById('rev-rent').value;
-    const type = document.getElementById('rev-type').value;
-    const comment = document.getElementById('rev-comment').value;
 
-    if (!rent || !comment) return;
-
-    try {
-      const res = await fetch(`${apiBase}/reviews/${state.currentCity}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          rent_amount: parseInt(rent),
-          property_type: type,
-          comment: comment,
-          likes: 0
-        })
-      });
-
-      if (res.ok) {
-        alert('Review Submitted! Thank you.');
-        document.getElementById('rev-rent').value = '';
-        document.getElementById('rev-comment').value = '';
-        loadReviews(state.currentCity); // Reload to show new review
-      } else {
-        alert('Failed to submit review.');
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Error submitting review.');
-    }
-  });
-}
